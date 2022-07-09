@@ -1,0 +1,10 @@
+# Don't send node_modules the daemon - we want the build server to install these.
+node_modules/
+.git
+repo.yml
+gateStatus
+/template
+/Trial
+/cache
+/balena-cli
+/access-pi

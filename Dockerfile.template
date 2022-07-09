@@ -1,0 +1,28 @@
+# base-image for node on any machine using a template variable,
+# see more about dockerfile templates here: https://www.balena.io/docs/learn/develop/dockerfile/#dockerfile-templates
+# and about balena base images here: https://www.balena.io/docs/reference/base-images/base-images/
+#FROM balenalib/%%BALENA_MACHINE_NAME%%-node
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-node
+# FROM balenalib/raspberrypi4-64-node
+
+# use `install_packages` if you need to install dependencies,
+# for instance if you need git, just uncomment the line below.
+# RUN install_packages git
+
+# Defines our working directory in container
+WORKDIR /usr/src/app
+# Copies the package.json first for better cache on later pushes
+COPY package*.json ./
+
+RUN npm install -g npm@latest
+RUN npm install
+
+# This will copy all files in our root to the working directory in the container
+COPY . ./
+
+# Enable udevd so that plugged dynamic hardware devices show up in our container.
+ENV UDEV=1
+
+RUN npm run build
+# the node server will start up on the device and continue to run until the container is stopped
+CMD [ "npm","run","start" ]
