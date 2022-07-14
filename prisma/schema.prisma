@@ -11,9 +11,8 @@ datasource db {
 }
 
 model locations {
-  id        Int    @id
+  id        Int    @id @unique
   name      String
-  address   String
   latitude  Float
   longitude Float
 }
