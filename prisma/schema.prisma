@@ -11,8 +11,9 @@ datasource db {
 }
 
 model locations {
-  id        Int    @id @unique
+  id        Int     @id @unique
   name      String
   latitude  Float
   longitude Float
+  active    Boolean @default(false)
 }
