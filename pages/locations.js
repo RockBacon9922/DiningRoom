@@ -49,6 +49,7 @@ function Posts() {
 							refetch();
 						}}
 						value={locQuery}
+						alt="Search"
 						className="border border-black"
 						placeholder="Search..."
 						onBlur={() => {
@@ -100,6 +101,7 @@ function Posts() {
 												ref={post.ref}
 												defaultChecked={post.active}
 												disabled={post.active}
+												alt="activate location"
 												onChange={() => {
 													if (post.ref.current.checked) {
 														post.ref.current.disabled = true;
