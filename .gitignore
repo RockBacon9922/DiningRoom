@@ -177,3 +177,7 @@ yarn-error.log*
 gateStatus
 /balena-cli
 /access-pi
+/oldCode
+*.db
+*.sql
+prisma/diningroom.db

@@ -3,26 +3,25 @@ import axios from "axios";
 import Image from "next/image";
 import Head from "next/head";
 import Logo from "../public/Logo.png";
+import { useQuery } from "@tanstack/react-query";
+const apiKey = process.env.MET_OFFICE_KEY;
 
-//getserverside data
-export async function getServerSideProps({ req, res }) {
-	//get location environment variable
-	const location = process.env.LOCATION;
-	const API_KEY = process.env.API_KEY;
-	const MET_OFFICE_API_KEY = process.env.METOFFICE_KEY;
-	//create a new request to get the data from the API using location and API_KEY
-	const response = await axios.get(
-		`https://api.openweathermap.org/data/2.5/weather?id=${location}&appid=${API_KEY}`
-	);
-	//return the data from the API
-	return {
-		props: {
-			data: response.data,
-		},
-	};
-}
+const getLocation = async () => {
+	const location = await axios.get("/api/currentLocation");
+	return location.data;
+};
+const location = getLocation();
+const url =
+	"http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/xml/" +
+	location +
+	"?res=daily&key=" +
+	process.env.MET_OFFICE_KEY;
 
-const Index = ({ data }) => {
+const getWeather = () => {
+	console.log(url);
+};
+
+const Index = () => {
 	var temperature = 20;
 	const weather = useRef(null);
 	const menu = useRef(null);
@@ -40,8 +39,10 @@ const Index = ({ data }) => {
 						alt="Bethany School Logo"
 						layout="responsive"
 						width="100%"
-						height="55%"
+						height="55
+						%"
 						objectFit="contain"
+						priority={true}
 					/>
 				</div>
 				<div className="bg-red-500 col-span-2 row-span-2"></div>
@@ -55,5 +56,6 @@ const Index = ({ data }) => {
 export default Index;
 
 const Weather = (props) => {
+	getWeather();
 	return <div className="bg-red-100 row-span-2"></div>;
 };
